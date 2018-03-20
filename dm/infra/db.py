@@ -10,12 +10,12 @@ def sqlite3_client(db_path):
     return s3
 
 
-def mysql_client(mysql_host=None, mysql_database=None, mysql_user=None, mysql_password=None):
+def mysql_client(db_host=None, db_name=None, db_user=None, db_password=None, **kwargs):
     return torndb.Connection(
-        host=mysql_host,
-        database=mysql_database,
-        user=mysql_user,
-        password=mysql_password,
+        host=db_host,
+        database=db_name,
+        user=db_user,
+        password=db_password,
         time_zone='+8:00',
         charset='utf8mb4',
         read_timeout=10,

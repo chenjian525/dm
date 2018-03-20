@@ -9,7 +9,7 @@ from dm.infra.db import mysql_client
 from dm.infra.utils import get_app_db_settings
 
 
-def setup_application(handlers, app_settings, use_sqlite=True):
+def setup_application(handlers, app_settings, use_mysql=True):
     app = web.Application(handlers, **app_settings)
 
     # 监听端口
@@ -18,7 +18,7 @@ def setup_application(handlers, app_settings, use_sqlite=True):
 
     # 连接数据库
     # ssh -L 3366:rdsmuvyfuzbbqea.mysql.rds.aliyuncs.com:3306 ali
-    if use_sqlite:
+    if use_mysql:
         app.db = mysql_client(**get_app_db_settings())
 
     # 程序退出处理
@@ -26,7 +26,7 @@ def setup_application(handlers, app_settings, use_sqlite=True):
 
     # debug 模式下，文件变更后程序将自动重启服务，在此之前需将 db 连接关掉
     def on_reload():
-        if use_sqlite:
+        if use_mysql:
             logging.info('close database connection')
             app.db.close()
 

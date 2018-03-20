@@ -36,4 +36,4 @@ if __name__ == '__main__':
 
     from dm.controllers.handlers import handlers
     from dm.infra.application import setup_application
-    setup_application(handlers, settings)
+    setup_application(handlers, settings, use_mysql=True)
