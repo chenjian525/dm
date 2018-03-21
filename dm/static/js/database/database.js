@@ -1,15 +1,28 @@
 $(function() {
-    console.log('hello world');
+
     $('#add-submit').click(function() {
-        console.log($('#action-form').serialize());
-        $.post('/dbs', $('#action-form').serialize(), function(data) {
+        $.ajax({
+            url: '/dbs',
+            data: $('#action-form').serialize(),
+            type: 'post'
+        }).done(function(data) {
             if (data.ok) {
-                showFormMsg('添加成功');
+                showFormSuccess(data.body);
+                setTimeout(function() {
+                    $('#addModal').modal('hide');
+                }, 2000)
             } else {
-                showFormError(data)
+                showFormMsg(data.body);
+                setTimeout(function() {
+                    $('#addModal').modal('hide');
+                }, 2000)
             }
         }).fail(function(jqXHR) {
-            showFormError('网络错误，请稍后重试')
+            if (jqXHR.responseJSON && !jqXHR.responseJSON.ok) {
+                showFormError(jqXHR.responseJSON.error.message);
+            } else {
+                showFormError('网络错误，请稍后重试')
+            }
         })
     });
 });

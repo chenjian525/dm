@@ -9,7 +9,7 @@ $.ajaxSetup({
 /**** end for sending all ajax post and delete requests with parameters _xsrf  ****/
 
 function showFormMsg(msg, delay) {
-    $('#form-alert').show_now(msg, delay);
+    $('#form-alert').show_now(msg, delay || 3000);
 }
 
 function showFormError(msg, delay) {

@@ -5,8 +5,10 @@
 {% end %}
 {% block content %}
 <div class="container" >
-    <h2 class="sub-header">数据库列表</h2>
-    <a data-toggle="modal" data-target="#addModal" class="pull-right">+ 添加数据库</a>
+    <h4 class="sub-header" style="margin-top: 50px">数据库列表</h4>
+    <a data-toggle="modal" data-target="#addModal" class="pull-right" style="display: block">+ 添加数据库</a>
+    <br>
+    <br>
     {% if dbs %}
     <div class="table-responsive">
         <table class="table table-striped">
@@ -14,6 +16,7 @@
                 <tr>
                   <th>名称</th>
                   <th>数据库名</th>
+                  <th>数据库类型</th>
                   <th>登陆用户</th>
                   <th>详情</th>
                   <th>操作</th>
@@ -25,8 +28,9 @@
                 <tr data-id="{{ db.id }}" data-name="{{ db.name }}" data-db_name="{{ db_info.get('db_name') or '' }}" data-username="{{ db_info.get('db_username') or '' }}">
                     <td>{{ db.name }}</td>
                     <td>{{ db_info.get('db_name') or '无' }}</td>
+                    <td>{{ db.type }}</td>
                     <td>{{ db_info.get('db_username') or '无' }}</td>
-                    <td>查看</td>
+                    <td><a href="{{ reverse_url('db_tables', db.id) }}">查看</a></td>
                     <td>
                         <a href="#" class="edit" title="修改">修改</a> /
                         <a href="#" class="delete" title="删除">删除</a>
@@ -102,7 +106,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="alert alert-danger hidden col-xs-6 col-xs-offset-4" id="form-alert"></div>
+                        <div class="alert alert-danger none col-xs-6 col-xs-offset-4" id="form-alert" style="display: none"></div>
                     </div>
              {% module xsrf_form_html() %}
                 </form>

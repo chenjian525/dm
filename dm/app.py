@@ -18,7 +18,6 @@ def set_logger():
 
 if __name__ == '__main__':
     define('app_path', os.path.dirname(os.path.abspath(__file__)))  # app.py所在目录
-    define('app_db', os.path.join(options.app_path, 'db/app.db'))
 
     load_app_options()  # 加载配置
 

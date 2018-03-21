@@ -1,0 +1,16 @@
+{% extends "../layout.html" %}
+{% block content %}
+<div class="container">
+    <h4 class="sub-header" style="margin-top: 50px">{{ name }} <span class="label label-primary">{{ db_type }}</span> <span class="label label-success">{{ db_name or '无' }}</span></h4>
+    {% if tables %}
+    <div class="row" style="margin-top: 50px">
+        {% for t in tables %}
+        <div class="col-lg-4"><a href="{{ reverse_url('table', db_id, t) }}" class="详情">{{ t }}</a></div>
+        {% end %}
+    </div>
+    {% else %}
+    <br>
+    <h6 class="tip jumbotron">当前数据库没有表</h6>
+    {% end %}
+</div>
+{% end %}
