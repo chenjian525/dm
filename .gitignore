@@ -1,1 +1,16 @@
-t stash
+*.pyc
+.idea
+*.log
+*.ipr
+*.imr
+*.iws
+*.sublime-project
+*.sublime-workspace
+
+
+*.swp
+*.DS_Store
+__pycache__
+*.pem
+.sass-cache
+
