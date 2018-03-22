@@ -20,8 +20,11 @@ class DBConnection(object):
     def get_tables(self):
         return self.db.get_tables()
 
-    def get_columns(self, table_name):
-        return self.db.get_columns(table_name)
+    def get_columns(self, table_name, include_type=True):
+        return self.db.get_columns(table_name, include_type)
+
+    def get_data_by_time_limit_sentence(self, table_name, parsed_arguments):
+        return self.db.get_data_by_time_limit_sentence(table_name, parsed_arguments)
 
 
 class MYSQLConnection(object):
@@ -53,9 +56,21 @@ class MYSQLConnection(object):
         res = self.conn.query('show tables')
         return [i for j in res for i in j.values()]
 
-    def get_columns(self, table_name):
+    def get_columns(self, table_name, include_type=True):
         res = self.conn.query('desc %s' % table_name)
-        return [(i['Field'], i['Type']) for i in res]
+        if include_type:
+            return [(i['Field'], i['Type']) for i in res]
+        else:
+            return [i['Field'] for i in res]
+
+    def get_data_by_time_limit_sentence(self, table_name, parsed_arguments):
+        sql = 'select %s from %s where %s'
+        normal_cols, date_limit_cols, *_ = parsed_arguments
+        normal_cols.extend(i[0] for i in date_limit_cols)
+        col_section = ', '.join(normal_cols)
+        date_limit_cols = [(i[0], i[1], self.conn._db.literal(i[2])) for i in date_limit_cols]
+        limit_section = ' and '.join(' '.join(i) for i in date_limit_cols)
+        return sql % (table_name, col_section, limit_section)
 
 
 def sqlite3_client(db_path):
