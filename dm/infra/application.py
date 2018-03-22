@@ -17,7 +17,6 @@ def setup_application(handlers, app_settings, use_mysql=True):
     server.listen(options.port, address="127.0.0.1")
 
     # 连接数据库
-    # ssh -L 3366:rdsmuvyfuzbbqea.mysql.rds.aliyuncs.com:3306 ali
     if use_mysql:
         app.db = mysql_client(**get_app_db_settings())
 

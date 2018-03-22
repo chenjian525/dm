@@ -19,7 +19,7 @@ CREATE TABLE task (
   next_exec_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   exec_times     INT(11)      NOT NULL DEFAULT '0',
   exec_type      TINYINT(2)   NOT NULL COMMENT '0:不周期执行 1:周期执行',
-  status         TINYINT(2)   NOT NULL COMMENT '0:只执行一次 1:周期执行',
+  status         TINYINT(2)   NOT NULL COMMENT '0:停止的task 1:有效task',
   created_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   updated_at     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
