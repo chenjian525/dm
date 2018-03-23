@@ -32,6 +32,7 @@ class Task(object):
         # self.executor.map(self.stored_data, res)
         for data in res:
             self.stored_data(data)
+        self.db.close()
 
     def stored_data(self, data):
         row_id = self.db.execute('insert into reg_db_data(db_id, table_name, data) values(%s, %s, %s)',

@@ -79,5 +79,5 @@ class OneTable(BaseHandler):
         sql_sentence = db_connection.get_data_by_time_limit_sentence(table_name, parsed_arguments)
         self.db.execute('insert into task(db_id, table_name, sql_sentence, periodic_time, next_exec_time, exec_times, '
                         'exec_type, status) values(%s, %s, %s, %s, NOW(), 0, %s, 1)', db_id, table_name,
-                        sql_sentence, float(periodic_time), 0 if not periodic_time else 1)
+                        sql_sentence, periodic_time, 0 if not periodic_time else 1)
         self.write_ok('创建成功')

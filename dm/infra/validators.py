@@ -43,7 +43,14 @@ def validate_add_task_args(columns, args):
             normal_columns.append(name)
 
         if name in ['exec_once', 'exec_per_minute']:
-            task_exec_limit_columns.extend([name, args[name]])
+            value = args[name]
+            if name == 'exec_per_minute':
+                try:
+                    value = float(value)
+                except Exception as e:
+                    raise HTTPError(400, '请填写正确的任务执行周期')
+
+            task_exec_limit_columns.extend([name, value])
 
     if not normal_columns:
         raise HTTPError(400, '请勾选要查询的字段')
