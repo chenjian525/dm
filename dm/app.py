@@ -1,19 +1,7 @@
 import os
-import sys
-import logging
 from tornado.options import options, define
 from dm.config import load_app_options
-
-
-def set_logger():
-    default_format = ('[%(asctime)s] [%(levelname)s] '
-                      '[%(module)s: %(lineno)d] %(message)s')
-    logging.basicConfig(
-        stream=sys.stdout,
-        level=logging.INFO,
-        format=default_format,
-        datefmt='%Y-%m-%d %H:%M:%S %z',
-    )
+from dm.infra.utils import set_logger
 
 
 if __name__ == '__main__':

@@ -26,6 +26,9 @@ class DBConnection(object):
     def get_data_by_time_limit_sentence(self, table_name, parsed_arguments):
         return self.db.get_data_by_time_limit_sentence(table_name, parsed_arguments)
 
+    def query(self, sentence):
+        return self.db.query(sentence)
+
 
 class MYSQLConnection(object):
     def __init__(self, **kwargs):
@@ -66,11 +69,14 @@ class MYSQLConnection(object):
     def get_data_by_time_limit_sentence(self, table_name, parsed_arguments):
         sql = 'select %s from %s where %s'
         normal_cols, date_limit_cols, *_ = parsed_arguments
-        normal_cols.extend(i[0] for i in date_limit_cols)
+        normal_cols.extend(list(set(i[0] for i in date_limit_cols)))
         col_section = ', '.join(normal_cols)
         date_limit_cols = [(i[0], i[1], self.conn._db.literal(i[2])) for i in date_limit_cols]
         limit_section = ' and '.join(' '.join(i) for i in date_limit_cols)
-        return sql % (table_name, col_section, limit_section)
+        return sql % (col_section, table_name, limit_section)
+
+    def query(self, sentence):
+        return self.conn.query(sentence)
 
 
 def sqlite3_client(db_path):

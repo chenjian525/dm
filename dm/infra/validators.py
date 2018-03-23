@@ -34,16 +34,16 @@ def validate_add_task_args(columns, args):
         if name.endswith(('_eendd', '_sstartt')) and any(i in name for i in date_columns):
             if '_eendd' in name:
                 name_ = name[:-6]
-                date_limit_columns.append((name_, '<=', args['name']))
+                date_limit_columns.append((name_, '<=', args[name]))
             else:
                 name_ = name[:-8]
-                date_limit_columns.append((name_, '>=', args['name']))
+                date_limit_columns.append((name_, '>=', args[name]))
 
         if any(name == i[0] for i in columns):
             normal_columns.append(name)
 
         if name in ['exec_once', 'exec_per_minute']:
-            task_exec_limit_columns.append((name, args['name']))
+            task_exec_limit_columns.extend([name, args[name]])
 
     if not normal_columns:
         raise HTTPError(400, '请勾选要查询的字段')
